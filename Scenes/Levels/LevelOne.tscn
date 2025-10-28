@@ -1,0 +1,279 @@
+[gd_scene load_steps=29 format=3 uid="uid://c84qd4yo0ll1j"]
+
+[ext_resource type="Script" uid="uid://bcfnfrlcxdt4c" path="res://Scripts/3d_world.gd" id="1_080ts"]
+[ext_resource type="PackedScene" uid="uid://e31gj6lct23k" path="res://Scenes/findable.tscn" id="2_cvavm"]
+[ext_resource type="Texture2D" uid="uid://bu5dly8pffx6n" path="res://Sprites/Sprite-0001.png" id="2_xrkai"]
+[ext_resource type="PackedScene" uid="uid://bt4o3ccw8o7nv" path="res://Scenes/npc.tscn" id="3_vhmom"]
+[ext_resource type="Texture2D" uid="uid://2ryuhlg8mo54" path="res://Sprites/Collectables/Collectable1.png" id="4_3xhpq"]
+[ext_resource type="Script" uid="uid://d2ossal304cul" path="res://Scripts/cam_pivot.gd" id="4_86mp4"]
+[ext_resource type="Script" uid="uid://dylv1gs1ufu7c" path="res://Scripts/camera_3d.gd" id="5_ufbp1"]
+[ext_resource type="PackedScene" uid="uid://u2nyhmhdynh0" path="res://Scenes/ui.tscn" id="6_0ieg5"]
+[ext_resource type="PackedScene" uid="uid://cl7m2xqebilns" path="res://Scenes/debug.tscn" id="8_1bf4a"]
+[ext_resource type="AudioStream" uid="uid://b545ug2grknfp" path="res://Sprites/Sound/Music/Evening Harmony.mp3" id="9_202xy"]
+[ext_resource type="PackedScene" uid="uid://ch24xvs6trmgu" path="res://Scenes/obstacle.tscn" id="10_d8b5e"]
+[ext_resource type="PackedScene" uid="uid://c2b4fj3isieet" path="res://Scenes/fauna/bird.tscn" id="11_d8b5e"]
+[ext_resource type="PackedScene" uid="uid://bkdbu1jqwcvlv" path="res://Scenes/fauna/Tree.tscn" id="12_dwuhe"]
+[ext_resource type="PackedScene" uid="uid://bnq7b741eygwv" path="res://Scenes/fauna/Rock.tscn" id="13_cgrxd"]
+[ext_resource type="PackedScene" uid="uid://d2bghshrs07ac" path="res://Scenes/fauna/rock2.tscn" id="14_cgrxd"]
+[ext_resource type="PackedScene" uid="uid://dx8rwl5yuqydn" path="res://Scenes/fauna/cattail.tscn" id="15_5ti6n"]
+[ext_resource type="PackedScene" uid="uid://boc3avtsep3qn" path="res://Scenes/fauna/pumpkin.tscn" id="16_img5f"]
+[ext_resource type="Texture2D" uid="uid://dmphxrhvcvx8s" path="res://Sprites/Nature/SKY.png" id="18_5u054"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vpjci"]
+size = Vector3(2, 1, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bf4a"]
+albedo_texture = ExtResource("2_xrkai")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_202xy"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_d8b5e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_202xy"]
+resource_name = "fadeIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CamPivot/Camera3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"animEnd"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_v1doc"]
+resource_name = "fadeOut"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Panel:theme_override_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d8b5e"]
+_data = {
+&"RESET": SubResource("Animation_d8b5e"),
+&"fadeIn": SubResource("Animation_202xy"),
+&"fadeOut": SubResource("Animation_v1doc")
+}
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5u054"]
+panorama = ExtResource("18_5u054")
+
+[sub_resource type="Sky" id="Sky_3xhpq"]
+sky_material = SubResource("PanoramaSkyMaterial_5u054")
+
+[sub_resource type="Environment" id="Environment_uymm0"]
+background_mode = 2
+sky = SubResource("Sky_3xhpq")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_080ts")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7927866, -0.4274892, 0.43444493, -0.08383447, 0.6295333, 0.7724375, -0.6037062, -0.64879954, 0.46324724, 1.2436187, 1.7180429, 1.337714)
+light_bake_mode = 1
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.5533458, 0.4622966, -0.6928855, 0.79337, -0.54589856, 0.26936752, -0.2537175, -0.69876796, -0.66884285, -2.1481473, 0.84093404, -1.9278587)
+light_bake_mode = 1
+
+[node name="Island" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_vpjci")
+surface_material_override/0 = SubResource("StandardMaterial3D_1bf4a")
+
+[node name="Findable" parent="." instance=ExtResource("2_cvavm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013512969, 0.5529976, -0.19067651)
+findableSprite = ExtResource("4_3xhpq")
+
+[node name="NPC" parent="." instance=ExtResource("3_vhmom")]
+transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0.037697196, 0.6169721, -0.083449334)
+
+[node name="CamPivot" type="Node3D" parent="."]
+visible = false
+script = ExtResource("4_86mp4")
+
+[node name="Camera3D" type="Camera3D" parent="CamPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.82102966, 0.5708856, 0, -0.5708856, 0.82102966, 0, 2.189537, 2.2841983)
+script = ExtResource("5_ufbp1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("6_0ieg5")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+objSprite = ExtResource("4_3xhpq")
+
+[node name="DEBUG" parent="CanvasLayer" instance=ExtResource("8_1bf4a")]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+offset_left = -7.0
+offset_top = -11.0
+offset_right = 972.0
+offset_bottom = 551.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_202xy")
+
+[node name="SpawnableSpots" type="Node" parent="."]
+
+[node name="Point1" type="Node3D" parent="SpawnableSpots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26739138, 0.536898, 0.7354706)
+
+[node name="Point2" type="Node3D" parent="SpawnableSpots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4152758, 0.59541696, -0.55250144)
+
+[node name="Point3" type="Node3D" parent="SpawnableSpots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46310213, 0.56592524, -0.34129342)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_202xy")
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_d8b5e")
+}
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Obstacle" parent="World" instance=ExtResource("11_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106522724, 0.545161, -0.51143914)
+
+[node name="Obstacle2" parent="World" instance=ExtResource("12_dwuhe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5058389, 0.79289144, 0.6799501)
+
+[node name="Obstacle30" parent="World" instance=ExtResource("12_dwuhe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.73740804, 0.7928917, -0.745373)
+
+[node name="Obstacle31" parent="World" instance=ExtResource("12_dwuhe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39948893, 0.79289144, -0.60773396)
+
+[node name="Obstacle32" parent="World" instance=ExtResource("12_dwuhe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6668639, 0.79289144, -0.15474021)
+
+[node name="Obstacle3" parent="World" instance=ExtResource("12_dwuhe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5058389, 0.79289144, -0.5727458)
+
+[node name="Obstacle4" parent="World" instance=ExtResource("12_dwuhe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.707222, 0.79289144, -0.5727458)
+
+[node name="Obstacle5" parent="World" instance=ExtResource("12_dwuhe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48769736, 0.79289144, 0.74771285)
+
+[node name="Obstacle6" parent="World" instance=ExtResource("13_cgrxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.087147176, 0.57230955, -0.86495876)
+
+[node name="Obstacle7" parent="World" instance=ExtResource("13_cgrxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28231353, 0.57230955, 0.6089828)
+
+[node name="Obstacle8" parent="World" instance=ExtResource("13_cgrxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6867632, 0.57230955, 0.32333595)
+
+[node name="Obstacle9" parent="World" instance=ExtResource("13_cgrxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6867632, 0.57230955, -0.46368402)
+
+[node name="Obstacle10" parent="World" instance=ExtResource("14_cgrxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.61244184, 0.56798804, 0.32845637)
+
+[node name="Obstacle11" parent="World" instance=ExtResource("14_cgrxd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7280322, 0.56798804, -0.3225)
+
+[node name="Obstacle12" parent="World" instance=ExtResource("15_5ti6n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25260955, 0.5432165, 0.1783371)
+
+[node name="Obstacle13" parent="World" instance=ExtResource("15_5ti6n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1938056, 0.5432165, 0.1783371)
+
+[node name="Obstacle14" parent="World" instance=ExtResource("16_img5f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49297976, 0.5475337, -0.2398465)
+
+[node name="Obstacle15" parent="World" instance=ExtResource("16_img5f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60857034, 0.5475337, -0.36152068)
+
+[node name="Obstacle16" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18137503, 0.66988295, 0.7357925)
+
+[node name="Obstacle17" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.34174305, 0.6266219, -0.6388156)
+
+[node name="Obstacle18" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.102576554, 0.6266219, -0.5383505)
+
+[node name="Obstacle19" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.102576554, 0.6266219, -0.41059268)
+
+[node name="Obstacle23" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8085918, 0.6266219, -0.21130054)
+
+[node name="Obstacle24" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8085918, 0.6266219, 0.11314991)
+
+[node name="Obstacle25" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5359587, 0.6266219, 0.027055293)
+
+[node name="Obstacle26" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5359587, 0.6266219, -0.17383233)
+
+[node name="Obstacle27" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5359587, 0.6266219, -0.34602174)
+
+[node name="Obstacle28" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32072228, 0.6266219, -0.2527525)
+
+[node name="Obstacle29" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8659889, 0.6266219, 0.33556113)
+
+[node name="Obstacle20" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32767397, 0.6266219, -0.46534604)
+
+[node name="Obstacle21" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21377605, 0.6266219, 0.4897961)
+
+[node name="Obstacle22" parent="World" instance=ExtResource("10_d8b5e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00084632635, 0.6266219, 0.55671686)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_uymm0")

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CitizenData" load_steps=5 format=3 uid="uid://do7l62ifcj5oe"]
+
+[ext_resource type="Script" uid="uid://cf04ej0grosoj" path="res://Resource/Citizen.gd" id="1_2q48x"]
+[ext_resource type="Texture2D" uid="uid://bmcyp5ig3urky" path="res://Sprites/Objects/Egg_item.png" id="1_qv186"]
+[ext_resource type="Texture2D" uid="uid://colncwteh1y22" path="res://Scenes/Egg item.png" id="1_rnsap"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_qv186"]
+frame_0/texture = ExtResource("1_rnsap")
+
+[resource]
+script = ExtResource("1_2q48x")
+citizenPortrait = SubResource("AnimatedTexture_qv186")
+citizenName = "John Eggbert"
+citizenItem = ExtResource("1_qv186")
+citizenClue = "Behind you cuh"
+metadata/_custom_type_script = "uid://cf04ej0grosoj"

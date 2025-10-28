@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://bt4o3ccw8o7nv"]
+
+[ext_resource type="Texture2D" uid="uid://g6up17had7n8" path="res://Sprites/Characters/Basic Charakter Spritesheet.png" id="1_acqhf"]
+[ext_resource type="Script" uid="uid://d15rukaniqe3g" path="res://Scenes/npc.gd" id="1_xxsvc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acqhf"]
+atlas = ExtResource("1_acqhf")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1ryf"]
+atlas = ExtResource("1_acqhf")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxsvc"]
+atlas = ExtResource("1_acqhf")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6unj"]
+atlas = ExtResource("1_acqhf")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h1ryf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acqhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1ryf")
+}],
+"loop": true,
+"name": &"Walkforward",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxsvc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6unj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="NPC" type="Node3D"]
+script = ExtResource("1_xxsvc")
+
+[node name="Player" type="AnimatedSprite3D" parent="."]
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_h1ryf")
+animation = &"Walkforward"

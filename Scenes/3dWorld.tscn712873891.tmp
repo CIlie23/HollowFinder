@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://b7vapp3biosel"]
+
+[ext_resource type="Script" uid="uid://d2ossal304cul" path="res://Scripts/cam_pivot.gd" id="1_iia01"]
+[ext_resource type="Script" uid="uid://bcfnfrlcxdt4c" path="res://Scripts/3d_world.gd" id="1_uvuhk"]
+[ext_resource type="PackedScene" uid="uid://bt4o3ccw8o7nv" path="res://Scenes/npc.tscn" id="2_vpjci"]
+[ext_resource type="Script" uid="uid://dylv1gs1ufu7c" path="res://Scripts/camera_3d.gd" id="3_kfxjg"]
+[ext_resource type="PackedScene" uid="uid://e31gj6lct23k" path="res://Scenes/findable.tscn" id="4_aggni"]
+[ext_resource type="PackedScene" uid="uid://u2nyhmhdynh0" path="res://Scenes/ui.tscn" id="5_e84au"]
+
+[sub_resource type="Environment" id="Environment_vpjci"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vpjci"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_uvuhk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vpjci")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.98537225, 0.1704159, 0, -0.1704159, 0.98537225, 0, 0.69291735, -0.5015023)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_vpjci")
+
+[node name="Findable" parent="." instance=ExtResource("4_aggni")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03289169, 0.5529976, -0.067017496)
+
+[node name="NPC" parent="." instance=ExtResource("2_vpjci")]
+transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, -0.048420608, 0.6169721, 0.17461741)
+
+[node name="CamPivot" type="Node3D" parent="."]
+script = ExtResource("1_iia01")
+
+[node name="Camera3D" type="Camera3D" parent="CamPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.82102966, 0.5708856, 0, -0.5708856, 0.82102966, 0, 2.189537, 2.2841983)
+script = ExtResource("3_kfxjg")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("5_e84au")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="SpawnableSpots" type="Node" parent="."]
+
+[node name="Point1" type="Node3D" parent="SpawnableSpots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.536898, 0)
+
+[node name="Point2" type="Node3D" parent="SpawnableSpots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4631021, 0.59541696, 0)
+
+[node name="Point3" type="Node3D" parent="SpawnableSpots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46310213, 0.56592524, -0.34129342)

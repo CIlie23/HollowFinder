@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://ch24xvs6trmgu"]
+
+[ext_resource type="Script" uid="uid://d2wbciapv5pdq" path="res://Scenes/obstacle.gd" id="1_15o2q"]
+[ext_resource type="Texture2D" uid="uid://r8xg2agvyhhf" path="res://Sprites/Nature/bush.png" id="2_2p81s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4dfp8"]
+size = Vector3(0.25585938, 0.2715454, 0.26367188)
+
+[sub_resource type="Animation" id="Animation_4dfp8"]
+resource_name = "fade"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Obstacle:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_q46uh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Obstacle:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c1vm5"]
+_data = {
+&"RESET": SubResource("Animation_q46uh"),
+&"fade": SubResource("Animation_4dfp8")
+}
+
+[node name="Obstacle" type="StaticBody3D" groups=["Obstacle"]]
+script = ExtResource("1_15o2q")
+obsSprite = ExtResource("2_2p81s")
+
+[node name="Obstacle" type="Sprite3D" parent="." groups=["Obstacle"]]
+billboard = 1
+texture = ExtResource("2_2p81s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." groups=["Obstacle"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.001953125, 0.015716553, -0.005859375)
+shape = SubResource("BoxShape3D_4dfp8")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_c1vm5")
+}

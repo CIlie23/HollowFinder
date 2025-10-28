@@ -1,0 +1,184 @@
+[gd_scene load_steps=18 format=3 uid="uid://bwx0c13pwwq0h"]
+
+[ext_resource type="Script" uid="uid://d2sfxoaf64bsl" path="res://Scenes/2d_world.gd" id="1_1hwmj"]
+[ext_resource type="FontFile" uid="uid://benm4k8ftpvhw" path="res://Sprites/Fonts/nokiafc22.ttf" id="1_185ac"]
+[ext_resource type="Texture2D" uid="uid://i14de7mpekd" path="res://Sprites/Nature/BG.png" id="2_idwvh"]
+[ext_resource type="PackedScene" uid="uid://4qi3udj4a8yf" path="res://Scenes/NPCDisplay.tscn" id="2_yecf7"]
+[ext_resource type="Texture2D" uid="uid://2ryuhlg8mo54" path="res://Sprites/Collectables/Collectable1.png" id="4_idwvh"]
+[ext_resource type="PackedScene" uid="uid://c84qd4yo0ll1j" path="res://Scenes/Levels/LevelOne.tscn" id="4_w6aps"]
+[ext_resource type="Texture2D" uid="uid://b5tgsulkwn355" path="res://Sprites/Collectables/Collectable2.png" id="6_rmbjc"]
+[ext_resource type="PackedScene" uid="uid://hbmuy3ivsyu8" path="res://Scenes/Levels/LevelTwo.tscn" id="6_w6aps"]
+[ext_resource type="PackedScene" uid="uid://du0uw6htfam6y" path="res://Scenes/Levels/LevelTree.tscn" id="7_noo1k"]
+[ext_resource type="Texture2D" uid="uid://b86u4cayn5cnc" path="res://Sprites/Collectables/Collectable3.png" id="8_bwweu"]
+[ext_resource type="PackedScene" uid="uid://dtyxyax5xcisr" path="res://Scenes/Levels/LevelFour.tscn" id="8_ti35b"]
+[ext_resource type="Texture2D" uid="uid://byarcc06y61na" path="res://Sprites/Collectables/Collectable4.png" id="10_0xcnb"]
+
+[sub_resource type="Animation" id="Animation_w6aps"]
+resource_name = "fadeIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:theme_override_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2ovnp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:theme_override_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_noo1k"]
+resource_name = "fadeOut"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:theme_override_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2ovnp"]
+_data = {
+&"RESET": SubResource("Animation_2ovnp"),
+&"fadeIn": SubResource("Animation_w6aps"),
+&"fadeOut": SubResource("Animation_noo1k")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w6aps"]
+bg_color = Color(0, 0, 0, 0)
+
+[node name="2dWorld" type="Node2D"]
+script = ExtResource("1_1hwmj")
+
+[node name="Bg" type="Sprite2D" parent="."]
+position = Vector2(473.99997, 268.00003)
+scale = Vector2(7.703125, 13.454546)
+texture = ExtResource("2_idwvh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 248.0
+offset_top = 288.0
+offset_right = 905.0
+offset_bottom = 561.0
+grow_vertical = 2
+theme_override_constants/separation = 150
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 160
+
+[node name="NPCDisplay" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_yecf7")]
+layout_mode = 2
+charPortrait = ExtResource("4_idwvh")
+charName = "Level 1"
+charLevel = ExtResource("4_w6aps")
+
+[node name="NPCDisplay2" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_yecf7")]
+layout_mode = 2
+charPortrait = ExtResource("6_rmbjc")
+charName = "Level 2"
+charLevel = ExtResource("6_w6aps")
+
+[node name="NPCDisplay3" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_yecf7")]
+layout_mode = 2
+charPortrait = ExtResource("8_bwweu")
+charName = "Level 3"
+charLevel = ExtResource("7_noo1k")
+
+[node name="NPCDisplay4" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_yecf7")]
+layout_mode = 2
+charPortrait = ExtResource("10_0xcnb")
+charName = "Level 4"
+charLevel = ExtResource("8_ti35b")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2ovnp")
+}
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 969.0
+offset_bottom = 548.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w6aps")
+
+[node name="Label2" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 404.0
+offset_top = 114.0
+offset_right = 586.0
+offset_bottom = 137.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_185ac")
+text = "Choose your level!"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 762.0
+offset_top = 496.0
+offset_right = 958.0
+offset_bottom = 536.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Button2" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_185ac")
+disabled = true
+text = "View Ending"
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_185ac")
+text = "BACK"
+
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_button_pressed"]
